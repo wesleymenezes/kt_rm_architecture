@@ -1,0 +1,9 @@
+kt_rest\architecture\application\Application.class
+kt_rest\architecture\application\SwaggerConfig.class
+kt_rest\architecture\application\services\Customer.class
+kt_rest\architecture\application\services\CustomerMap.class
+kt_rest\architecture\application\WebServiceConfig.class
+kt_rest\architecture\application\services\CustomerWSImpl.class
+kt_rest\architecture\application\services\CustomerController.class
+kt_rest\architecture\application\SpringUtils.class
+kt_rest\architecture\application\services\CustomerWS.class
