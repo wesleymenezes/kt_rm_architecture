@@ -12,7 +12,7 @@ public class CustomerWSImpl implements CustomerWS {
   
   private final AtomicLong counter = new AtomicLong();
   
-  @Autowired
+  //This class is out of Spring Context, so the singleton will be directly retrieve from Spring
   CustomerMap customerMap = (CustomerMap)SpringUtils.ctx.getBean(CustomerMap.class);
   
   public Customer createCustomer(@WebParam(name = "incustomer", targetNamespace = "http://services.application.architecture.kt_rest/") Customer incustomer) {
