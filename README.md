@@ -1,2 +1,4 @@
 # kt_rm_architecture
-Set of projects to RM KT Techonology
+RM KT Technology Workshop - REST (May 15th 2018)
+
+To exec use goal: spring-boot:run
