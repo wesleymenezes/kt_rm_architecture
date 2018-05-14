@@ -1,6 +1,7 @@
 package kt_rest.architecture.application.services;
 
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,16 +18,16 @@ public class Customer implements Serializable {
   private static final long serialVersionUID = 1L;
   
 
-  private Long id;
+  private Integer id;
   private String firstName;
   private String lastName;
   private String fullName;
-
+  
   public Customer() {
     
   }
       
-  public Customer(Long id, String firstName, String lastName) {
+  public Customer(Integer id, String firstName, String lastName) {
       this.id = id;
       this.firstName = firstName;
       this.lastName = lastName;
@@ -34,12 +35,12 @@ public class Customer implements Serializable {
   }
 
   @XmlElement
-  public Long getId() {
+  public Integer getId() {
       return id;
   }
   
 //  @ApiModelProperty(position = 1, required = true, value = "customer id. Use 0 to create a new customer")
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

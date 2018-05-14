@@ -26,14 +26,11 @@ import kt_rest.architecture.application.Application;
 @RequestMapping("/v1")
 public class CustomerController {
 
-    private static final String template = "Ola, %s!";
-    private final AtomicLong counter = new AtomicLong();
-    
     @Autowired
     CustomerMap customerMap;
     
     @RequestMapping(path="/customers", method = RequestMethod.GET, produces = "application/json")
-    @ApiOperation(value = "Returns user details", notes = "Returns a complete list of users details with a date of last modification.", response = Customer.class)
+    @ApiOperation(value = "Returns customer details", notes = "Returns a complete list of customer details.", response = Customer.class)
     @ApiResponse(code = 202, message = "Successful retrieval of customers details", response = Customer.class)
     public ResponseEntity<Collection<Customer>> getCustomers() {
       return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerMap.getCustomers());
@@ -51,7 +48,7 @@ public class CustomerController {
     @RequestMapping(path="/customers", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<Customer> createCustomers(@RequestBody Customer customer) {
       if (customer != null) {
-        return addCustomer(customer.getId().toString(), customer.getFistName(), customer.getLastName());
+        return addCustomer(customer);
       } else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
       }
@@ -59,24 +56,25 @@ public class CustomerController {
 
 
     /**
-     * @param inid
-     * @param infirstname
-     * @param inlastname
-     * @return
+     * @param customer
+     * @return customer
      */
-    private ResponseEntity<Customer> addCustomer(String inid, String infirstname, String inlastname) {
-      Customer customer;
-      if (inid.equals("0")) {
-        customer = new Customer(counter.incrementAndGet(), infirstname, inlastname);
+    private ResponseEntity<Customer> addCustomer(Customer customer) {
+
+      if (customer.getId()==0) {
+        customer = new Customer(customerMap.getCustomers().size()+1, customer.getFistName(), customer.getLastName());
         customerMap.addCustomer(customer);
         //201 Created
         return ResponseEntity.status(HttpStatus.CREATED).body(customer);
       } else {
-        customer = customerMap.getCustomers(new Long(inid));
+//        customer = customers.get(new Long(inid));
+        Customer customerCheck = customerMap.getCustomers(customer.getId());
+        if (customerCheck != null) {
+          customerMap.addCustomer(customer);
         //202 Accepted
-        if (customer!=null) return ResponseEntity.status(HttpStatus.ACCEPTED).body(customer);
-        //404 Not Found
-        else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+          return ResponseEntity.status(HttpStatus.ACCEPTED).body(customer);}
+        else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customer);
+        
       }
     }
 }

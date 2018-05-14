@@ -14,17 +14,18 @@ import org.springframework.stereotype.Service;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CustomerMap {
   
-  private Map<Long, Customer> customers = new ConcurrentHashMap<Long,Customer>();
+  private Map<Integer, Customer> customers = new ConcurrentHashMap<Integer,Customer>();
+  
   
   public void addCustomer (Customer customer) {
-    this.customers.putIfAbsent(customer.getId(), customer);
+    this.customers.put(customer.getId(), customer);
   }
 
   public Collection<Customer> getCustomers() {
     return this.customers.values();
   }
 
-  public Customer getCustomers(Long id) {
+  public Customer getCustomers(Integer id) {
     return this.customers.get(id);
   }
 }

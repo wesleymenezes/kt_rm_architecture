@@ -1,16 +1,10 @@
 package kt_rest.architecture.application.services;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import javax.jws.WebParam;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import kt_rest.architecture.application.SpringUtils;
 
 public class CustomerWSImpl implements CustomerWS {
-  
-  private final AtomicLong counter = new AtomicLong();
   
   //This class is out of Spring Context, so the singleton will be directly retrieve from Spring
   CustomerMap customerMap = (CustomerMap)SpringUtils.ctx.getBean(CustomerMap.class);
@@ -20,11 +14,16 @@ public class CustomerWSImpl implements CustomerWS {
     
     //new customer
     if (incustomer.getId()==0) {
-      customer = new Customer(counter.incrementAndGet(), incustomer.getFistName(), incustomer.getLastName());
+      customer = new Customer(customerMap.getCustomers().size()+1, incustomer.getFistName(), incustomer.getLastName());
+      customerMap.addCustomer(customer);
     } else {
+      Customer customerCheck = customerMap.getCustomers(incustomer.getId());
+      if (customerCheck != null) {
+        customerMap.addCustomer(incustomer);
+      }
       customer = incustomer;
     }
-    customerMap.addCustomer(customer);
+    
     return customer;
   }
 
