@@ -31,9 +31,9 @@ public class CustomerController {
     
     @RequestMapping(path="/customers", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation(value = "Returns customer details", notes = "Returns a complete list of customer details.", response = Customer.class)
-    @ApiResponse(code = 202, message = "Successful retrieval of customers details", response = Customer.class)
+    @ApiResponse(code = 200, message = "Successful retrieval of customers details", response = Customer.class)
     public ResponseEntity<Collection<Customer>> getCustomers() {
-      return ResponseEntity.status(HttpStatus.ACCEPTED).body(customerMap.getCustomers());
+      return ResponseEntity.status(HttpStatus.OK).body(customerMap.getCustomers());
     }
     
 //    @RequestMapping(path="/customers", method = RequestMethod.POST, produces = "application/json")
