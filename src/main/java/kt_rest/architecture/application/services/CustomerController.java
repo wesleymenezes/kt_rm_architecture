@@ -31,12 +31,6 @@ public class CustomerController {
     
     @Autowired
     CustomerMap customerMap;
-//    private Map<Long, Customer> customers = new ConcurrentHashMap<Long,Customer>();
-
-//    @RequestMapping("/")
-//    public String index() {
-//        return "Spring Boot started...";
-//    }
     
     @RequestMapping(path="/customers", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation(value = "Returns user details", notes = "Returns a complete list of users details with a date of last modification.", response = Customer.class)
@@ -74,12 +68,10 @@ public class CustomerController {
       Customer customer;
       if (inid.equals("0")) {
         customer = new Customer(counter.incrementAndGet(), infirstname, inlastname);
-//        customers.put(customer.getId(), customer);
         customerMap.addCustomer(customer);
         //201 Created
         return ResponseEntity.status(HttpStatus.CREATED).body(customer);
       } else {
-//        customer = customers.get(new Long(inid));
         customer = customerMap.getCustomers(new Long(inid));
         //202 Accepted
         if (customer!=null) return ResponseEntity.status(HttpStatus.ACCEPTED).body(customer);

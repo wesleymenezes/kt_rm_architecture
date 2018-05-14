@@ -5,10 +5,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-@Service
+@Configuration
+@Service("customerMap")
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CustomerMap {
   
