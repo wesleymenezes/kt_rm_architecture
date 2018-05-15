@@ -10,7 +10,7 @@ public class CustomerWSImpl implements CustomerWS {
   CustomerMap customerMap = (CustomerMap)SpringUtils.ctx.getBean(CustomerMap.class);
   
   public Customer createCustomer(@WebParam(name = "incustomer", targetNamespace = "http://services.application.architecture.kt_rest/") Customer incustomer) {
-    Customer customer;
+    Customer customer = null;
     
     //new customer
     if (incustomer.getId()==0) {
@@ -20,8 +20,9 @@ public class CustomerWSImpl implements CustomerWS {
       Customer customerCheck = customerMap.getCustomers(incustomer.getId());
       if (customerCheck != null) {
         customerMap.addCustomer(incustomer);
+        customer = incustomer;
       }
-      customer = incustomer;
+      
     }
     
     return customer;
